@@ -4,6 +4,6 @@ import Button from './components/Button.vue';
 </script>
 
 <template>
-<Button label="Сократить" @click = "() => console.log('Миша сука')"/>
+<Button label="Сократить" @click = "() => console.log('Данил гондон ибаный')"/>
 </template>
 

@@ -1,3 +1,4 @@
+
 <template>
     <button class="btn" type="button">
         {{label}}
