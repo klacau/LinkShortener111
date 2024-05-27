@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import Button from './components/Button.vue';
+import MainPage from './components/MainPage.vue';
+
 
 </script>
 
 <template>
-<Button label="Сократить" @click = "() => console.log('Данил гондон ибаный')"/>
+<MainPage/>
 </template>
 
