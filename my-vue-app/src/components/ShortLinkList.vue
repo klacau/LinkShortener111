@@ -5,7 +5,7 @@ import { defineProps } from 'vue';
 import ShortLinkView from './ShortLinkView.vue';
 
 interface ShortLinkListProps {
-    links: ShortLink[];
+    links: readonly ShortLink[];
 }
 
 const props = defineProps<ShortLinkListProps>();

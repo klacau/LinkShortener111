@@ -7,20 +7,17 @@ import NavigationBar from './NavigationBar.vue';
 import ShortLinkList from './ShortLinkList.vue';
 import {ref} from 'vue';
 
-const inputLink = ref('');
+interface MainPageProps {
+    links: readonly ShortLink[];
+}
 
-const links: ShortLink[] = [
-    {
-        shortUrl: 'https://localhost.com/sK8qlw',
-        originalUrl: 'https://metanit.com/',
-        createdAt: new Date()
-    },
-    {
-        shortUrl: 'https://localhost.com/sK8qlw',
-        originalUrl: 'https://metanit.com/',
-        createdAt: new Date()
-    },
-];
+const inputText = ref('');
+
+const props = defineProps<MainPageProps>();
+
+const emit = defineEmits<{
+    shortenLink: [text: string]
+}>();
 </script>
 
 <template>
@@ -32,14 +29,14 @@ const links: ShortLink[] = [
                 <div class="main-page-form">
                     <h2 class="heading-2 main-page-form__heading">Вставьте ссылку для сокращения</h2>
                     <div class="main-page-form-elements">
-                        <InputField class="main-page__input-field" :text="inputLink" @change="(value) => inputLink = value" />
-                        <Button label="Сократить" @click = "() => console.log(inputLink)" />
+                        <InputField class="main-page__input-field" :text="inputText" @change="(value) => inputText = value" />
+                        <Button label="Сократить" @click = "$emit('shortenLink', inputText)" />
                     </div>
                 </div>
             </div>
             
             <div class="main-page__list-wrapper">
-                <ShortLinkList class="main-page__list" :links="links" />
+                <ShortLinkList class="main-page__list" :links="props.links" />
             </div>
         </div>
     </div>
