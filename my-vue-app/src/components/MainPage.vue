@@ -45,6 +45,7 @@ const inputLink = ref('');
     display: flex;
     margin-top: -5%;
     justify-content: space-around;
+    padding: 0px 24px;
 }
 
 .main-page-form {
