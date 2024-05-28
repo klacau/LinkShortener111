@@ -2,6 +2,7 @@
 import Button from './Button.vue';
 import InputField from './InputField.vue';
 import NavigationBar from './NavigationBar.vue';
+import ShortLinkView from './ShortLinkView.vue';
 import {ref} from 'vue';
 const inputLink = ref('');
 </script>
@@ -19,6 +20,10 @@ const inputLink = ref('');
                     <Button label="Сократить" @click = "() => console.log(inputLink)" />
                 </div>
             </div>
+        </div>
+
+        <div class="main-page-link">
+            <div class="main-page-link-content"><ShortLinkView/></div>
         </div>
     </div>
 </div>
@@ -70,5 +75,14 @@ const inputLink = ref('');
 
 .main-page-form__heading {
     text-align: center;
+}
+.main-page-link{
+    display: flex;
+    justify-content: space-around;
+}
+.main-page-link-content{
+    flex-grow: 1;
+    max-width: 728px;
+    max-height: 80px;
 }
 </style>
