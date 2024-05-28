@@ -7,6 +7,8 @@
 <style>
 .navigation-bar {
     padding: 24px 28px;
+    background-color: rgba(166, 187, 227, 0.494);
+    backdrop-filter: blur(10px);
     position: fixed;
     width: 100%;
 }
