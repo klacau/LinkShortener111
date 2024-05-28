@@ -1,13 +1,12 @@
 <template>
 <input class="in" type="text" 
-:value="text"
-@input= "event => $emit('change', event.target!.value)"
+:value="props.text"
+@input= "event => $emit('change', (event.target as HTMLInputElement).value)"
 >
 </template>
 
 
 <script setup lang="ts">
-import type {Ref} from 'vue'
 interface InputFieldProps {
     text: string;
     }

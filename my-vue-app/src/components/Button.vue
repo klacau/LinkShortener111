@@ -1,7 +1,7 @@
 
 <template>
     <button class="btn" type="button">
-        {{label}}
+        {{ props.label }}
     </button>
 </template>
 
