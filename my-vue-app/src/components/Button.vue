@@ -1,18 +1,16 @@
-
-<template>
-    <button class="btn" type="button">
-        {{ props.label }}
-    </button>
-</template>
-
 <script setup lang="ts">
 interface ButtonProps {
     label: string;
 }
 
 const props = defineProps<ButtonProps>();
-
 </script>
+
+<template>
+    <button class="btn" type="button">
+        {{ props.label }}
+    </button>
+</template>
 
 <style>
     .btn{
