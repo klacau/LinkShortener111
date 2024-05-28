@@ -1,29 +1,46 @@
 <script setup lang="ts">
+import type { ShortLink } from '../models/ShortLink';
+
 import Button from './Button.vue';
 import InputField from './InputField.vue';
 import NavigationBar from './NavigationBar.vue';
-import ShortLinkView from './ShortLinkView.vue';
+import ShortLinkList from './ShortLinkList.vue';
 import {ref} from 'vue';
+
 const inputLink = ref('');
+
+const links: ShortLink[] = [
+    {
+        shortUrl: 'https://localhost.com/sK8qlw',
+        originalUrl: 'https://metanit.com/',
+        createdAt: new Date()
+    },
+    {
+        shortUrl: 'https://localhost.com/sK8qlw',
+        originalUrl: 'https://metanit.com/',
+        createdAt: new Date()
+    },
+];
 </script>
 
 <template>
 <div class="main-page">
     <NavigationBar />
     <div class="main-page-content">
-        
-        <div class="main-page-form-wrapper">
-            <div class="main-page-form">
-                <h2 class="heading-2 main-page-form__heading">Вставьте ссылку для сокращения</h2>
-                <div class="main-page-form-elements">
-                    <InputField class="main-page__input-field" :text="inputLink" @change="(value) => inputLink = value" />
-                    <Button label="Сократить" @click = "() => console.log(inputLink)" />
+        <div class="main-page-content-inner">
+            <div class="main-page-form-wrapper">
+                <div class="main-page-form">
+                    <h2 class="heading-2 main-page-form__heading">Вставьте ссылку для сокращения</h2>
+                    <div class="main-page-form-elements">
+                        <InputField class="main-page__input-field" :text="inputLink" @change="(value) => inputLink = value" />
+                        <Button label="Сократить" @click = "() => console.log(inputLink)" />
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="main-page-link">
-            <div class="main-page-link-content"><ShortLinkView/></div>
+            
+            <div class="main-page__list-wrapper">
+                <ShortLinkList class="main-page__list" :links="links" />
+            </div>
         </div>
     </div>
 </div>
@@ -43,12 +60,14 @@ const inputLink = ref('');
     flex-direction: column;
     align-items: stretch;
     justify-content: space-around;
+}
 
+.main-page-content-inner {
+    margin-top: -5%;
 }
 
 .main-page-form-wrapper {
     display: flex;
-    margin-top: -5%;
     justify-content: space-around;
     padding: 0px 24px;
 }
@@ -76,6 +95,19 @@ const inputLink = ref('');
 .main-page-form__heading {
     text-align: center;
 }
+
+.main-page__list-wrapper {
+    margin-top: 56px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.main-page__list {
+    flex-grow: 1;
+}
+
+
+
 .main-page-link{
     display: flex;
     justify-content: space-around;

@@ -1,3 +1,5 @@
-class ShortLink {
-    constructor(public shortUrl: string, public originalUrl: string) {}
+export interface ShortLink {
+    shortUrl: string;
+    originalUrl: string;
+    createdAt: Date;
 }
