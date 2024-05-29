@@ -27,7 +27,7 @@ const props = defineProps<ShortLinkViewProps>();
     display: flex;
     justify-content: space-between;
     background-color: #fff;
-    padding: 20px 0px
+    padding: 20px 0px;
 }
 
 .links-data {

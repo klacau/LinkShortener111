@@ -45,8 +45,8 @@ const emit = defineEmits<{
 
 <style>
 .main-page {
-    background-color: #A6BBE3;
-    height: 100%;
+    position: relative;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -101,6 +101,9 @@ const emit = defineEmits<{
 
 .main-page__list {
     flex-grow: 1;
+    width: 100%;
+    position: absolute;
+    
 }
 
 
