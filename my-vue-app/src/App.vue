@@ -10,7 +10,7 @@ const storageLinks: ShortLink[] = linksValue === null ? [] : JSON.parse(linksVal
 const links: Ref<ShortLink[]> = ref(storageLinks);
 
 function shortenLink(text: string) {
-    const shortenedUrl = `https://localhost:0000/kS9wQ${Math.round(Math.random() * 9)}`;
+    const shortenedUrl = `https://localhost:0000/kS9wQ${Math.round(Math.random() * 9999)}`;
     
     const shortLink: ShortLink = {
         shortUrl: shortenedUrl,
@@ -18,13 +18,18 @@ function shortenLink(text: string) {
         createdAt: new Date()
     };
 
-    links.value.push(shortLink);
+    links.value.unshift(shortLink);
+    localStorage.setItem('links', JSON.stringify(links.value));
+}
+
+function removeLink(shortUrl: string) {
+    links.value = links.value.filter(link => link.shortUrl !== shortUrl);
     localStorage.setItem('links', JSON.stringify(links.value));
 }
 </script>
 
 <template>
-<MainPage :links="links" @shortenLink="shortenLink"/>
+<MainPage :links="links" @shortenLink="shortenLink" @removeLink="removeLink" />
 </template>
 
 <style>

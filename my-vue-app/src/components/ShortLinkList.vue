@@ -9,12 +9,16 @@ interface ShortLinkListProps {
 }
 
 const props = defineProps<ShortLinkListProps>();
+
+const emit = defineEmits<{
+    removeLink: [text: string]
+}>();
 </script>
 
 <template>
   <ul class="short-link-list">
     <li v-for="link in props.links" :key="link.shortUrl" class="link-item">
-      <ShortLinkView :shortLink="link" />
+      <ShortLinkView :shortLink="link" @clickRemove="() => $emit('removeLink', link.shortUrl)" />
     </li>
   </ul>
 </template>

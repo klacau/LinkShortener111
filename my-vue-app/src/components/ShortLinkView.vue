@@ -7,17 +7,27 @@ interface ShortLinkViewProps {
 }
 
 const props = defineProps<ShortLinkViewProps>();
+
+const emit = defineEmits<{
+    clickRemove: []
+}>();
 </script>
 
 <template>
     <div class="short-link-view">
         <div class="links-data">
-            <a class="links-data-short" target="_blank" :href="props.shortLink.shortUrl">{{ props.shortLink.shortUrl }}</a>
-            <a class="links-data-original" target="_blank" :href="props.shortLink.originalUrl">{{ props.shortLink.originalUrl }}</a>
+            <a class="links-data-short" target="_blank" :href="props.shortLink.shortUrl">
+                {{ props.shortLink.shortUrl }}
+            </a>
+            <a class="links-data-original" target="_blank" :href="props.shortLink.originalUrl">
+                {{ props.shortLink.originalUrl }}
+            </a>
         </div>
         <div class="short-link-menu">
             <p class="short-link-menu-date">{{ props.shortLink.createdAt.toLocaleString() }}</p>
-            <button class="delete-button" type="button"><CrossIcon class="delete-button-icon"/></button>
+            <button class="delete-button" type="button" @click="() => $emit('clickRemove')">
+                <CrossIcon class="delete-button-icon"/>
+            </button>
         </div>
     </div>
 </template>

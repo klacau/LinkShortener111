@@ -5,7 +5,7 @@ import Button from './Button.vue';
 import InputField from './InputField.vue';
 import NavigationBar from './NavigationBar.vue';
 import ShortLinkList from './ShortLinkList.vue';
-import {ref} from 'vue';
+import {ref, computed} from 'vue';
 
 interface MainPageProps {
     links: readonly ShortLink[];
@@ -16,27 +16,47 @@ const inputText = ref('');
 const props = defineProps<MainPageProps>();
 
 const emit = defineEmits<{
-    shortenLink: [text: string]
+    shortenLink: [text: string],
+    removeLink: [text: string]
 }>();
+
+const innerContentClassList = computed(() => {
+    const lst = ['main-page-content-inner'];
+    if (props.links.length > 0) {
+        if (props.links.length > 1) {
+            lst.push('main-page-content-inner--with-list');
+        } else {
+            lst.push('main-page-content-inner--with-small-list');
+        }
+    }
+    return lst;
+});
 </script>
 
 <template>
 <div class="main-page">
     <NavigationBar />
     <div class="main-page-content">
-        <div class="main-page-content-inner">
+        <div :class="innerContentClassList.join(' ')">
             <div class="main-page-form-wrapper">
                 <div class="main-page-form">
                     <h2 class="heading-2 main-page-form__heading">Вставьте ссылку для сокращения</h2>
                     <div class="main-page-form-elements">
-                        <InputField class="main-page__input-field" :text="inputText" @change="(value) => inputText = value" />
-                        <Button label="Сократить" @click = "$emit('shortenLink', inputText)" />
+                        <InputField class="main-page__input-field" 
+                            :text="inputText" 
+                            @change="(value) => inputText = value" 
+                            @keyup.enter="() => $emit('shortenLink', inputText)"
+                        />
+                        <Button label="Сократить" @click="() => $emit('shortenLink', inputText)" />
                     </div>
                 </div>
             </div>
             
-            <div class="main-page__list-wrapper">
-                <ShortLinkList class="main-page__list" :links="props.links" />
+            <div class="main-page__list-wrapper" v-if="props.links.length > 0">
+                <ShortLinkList class="main-page__list" 
+                    :links="props.links" 
+                    @removeLink="shortUrl => $emit('removeLink', shortUrl)" 
+                />
             </div>
         </div>
     </div>
@@ -59,8 +79,12 @@ const emit = defineEmits<{
     justify-content: space-around;
 }
 
-.main-page-content-inner {
-    margin-top: -5%;
+.main-page-content-inner--with-list {
+    padding-top: 200px;
+}
+
+.main-page-content-inner--with-small-list {
+    padding-top: 120px;
 }
 
 .main-page-form-wrapper {
@@ -95,6 +119,7 @@ const emit = defineEmits<{
 
 .main-page__list-wrapper {
     margin-top: 56px;
+    margin-bottom: 56px;
     display: flex;
     justify-content: space-around;
 }
@@ -102,7 +127,7 @@ const emit = defineEmits<{
 .main-page__list {
     flex-grow: 1;
     width: 100%;
-    position: absolute;
+
     
 }
 
