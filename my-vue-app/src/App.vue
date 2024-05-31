@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import type { ShortLink } from './models/ShortLink';
 
+import LinkCreatedPage from './components/LinkCreatedPage.vue';
 import MainPage from './components/MainPage.vue';
-import { ref, Ref} from 'vue';
+import { ref, Ref } from 'vue';
+
+type Page = 'Main' | 'LinkCreated';
+
+const currentPage = ref<Page>('Main');
+const currentLink = ref<ShortLink>();
 
 const linksValue = localStorage.getItem('links');
 const storageLinks: ShortLink[] = linksValue === null ? [] : JSON.parse(linksValue);
@@ -14,7 +20,7 @@ function shortenLink(text: string) {
     const reg = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
     if (!reg.test(text)) {
-        console.error("Это не ссылка")
+        console.error("Это не ссылка");
         return;
     }
     
@@ -25,6 +31,9 @@ function shortenLink(text: string) {
         originalUrl: text,
         createdAt: new Date()
     };
+
+    currentPage.value = 'LinkCreated';
+    currentLink.value = shortLink;
 
     links.value.unshift(shortLink);
     localStorage.setItem('links', JSON.stringify(links.value));
@@ -37,7 +46,17 @@ function removeLink(shortUrl: string) {
 </script>
 
 <template>
-<MainPage :links="links" @shortenLink="shortenLink" @removeLink="removeLink" />
+<MainPage v-if="currentPage === 'Main'" 
+    :links="links" 
+    @shortenLink="shortenLink" 
+    @removeLink="removeLink"
+/>
+<LinkCreatedPage v-else-if="currentPage === 'LinkCreated'"
+    :createdLink="currentLink!"
+    :links="links" 
+    @shortenAnotherLink="() => { currentPage = 'Main' }" 
+    @removeLink="removeLink" 
+/>
 </template>
 
 <style>
