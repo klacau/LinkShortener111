@@ -4,7 +4,6 @@ import type { ShortLink } from '../models/ShortLink';
 import BasePage from './BasePage.vue';
 import Button from './Button.vue';
 import CopyIcon from '../assets/copy.svg';
-// import { ref } from 'vue';
 
 interface LinkCreatedPageProps {
     createdLink: ShortLink;
@@ -118,4 +117,17 @@ function copyToClipboard() {
 .shortlink-card-info-link__label {
     margin-bottom: 10px;
 }
+.shortlink-card-info-link__text {
+    color: #1A243F;
+    font-family: Inter;
+    font-size: 14px;
+    line-height: 18px;
+}
+.shortlink-card-info-link__label {
+    color: #6A7996;
+    font-family: Inter;
+    font-size: 12px;
+    line-height: 18px;
+}
 </style>
+
