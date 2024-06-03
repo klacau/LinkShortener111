@@ -11,9 +11,23 @@ const currentPage = ref<Page>('Main');
 const currentLink = ref<ShortLink>();
 
 const linksValue = localStorage.getItem('links');
-const storageLinks: ShortLink[] = linksValue === null ? [] : JSON.parse(linksValue);
+const storageLinks: ShortLink[] = getLinks();
 
 const links: Ref<ShortLink[]> = ref(storageLinks);
+
+function getLinks(): ShortLink[] {
+    const rawLinks: any[] = linksValue === null ? [] : JSON.parse(linksValue);
+    const ret: ShortLink[] = []
+    for (let link of rawLinks) {
+        const shortLink: ShortLink = {
+            shortUrl: link.shortUrl,
+            originalUrl: link.originalUrl,
+            createdAt: new Date(link.createdAt)
+        }
+        ret.push(shortLink);
+    }
+    return ret;
+}
 
 function shortenLink(text: string) {
 
