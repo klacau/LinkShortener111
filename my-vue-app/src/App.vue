@@ -9,6 +9,7 @@ type Page = 'Main' | 'LinkCreated';
 
 const currentPage = ref<Page>('Main');
 const currentLink = ref<ShortLink>();
+const hasError = ref<boolean>(false);
 
 const linksValue = localStorage.getItem('links');
 const storageLinks: ShortLink[] = getLinks();
@@ -34,7 +35,7 @@ function shortenLink(text: string) {
     const reg = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
     if (!reg.test(text)) {
-        console.error("Это не ссылка");
+        hasError.value = true
         return;
     }
     
@@ -48,6 +49,7 @@ function shortenLink(text: string) {
 
     currentPage.value = 'LinkCreated';
     currentLink.value = shortLink;
+    hasError.value = false
 
     links.value.unshift(shortLink);
     localStorage.setItem('links', JSON.stringify(links.value));
@@ -62,6 +64,7 @@ function removeLink(shortUrl: string) {
 <template>
 <MainPage v-if="currentPage === 'Main'" 
     :links="links" 
+    :hasError="hasError"
     @shortenLink="shortenLink" 
     @removeLink="removeLink"
 />
